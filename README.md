@@ -2,7 +2,7 @@
 
 <br />
 <div align="center">
-  <h1 style="font-size: 48px; color: red;">ACT-2001 Introduction à l'actuariat II</h1>
+  <h1 style="font-size: 48px;">ACT-2001 Introduction à l'actuariat II</h1>
   <p align="center">
     École d'actuariat de l'Université Laval <br/>
     Hiver 2025
