@@ -20,9 +20,9 @@
 
 ## 👨‍💻 **Auxiliaires d’enseignement**
 
-*
-*
-*
+* Ève Busque
+* Alexandre Dubeau
+* Philippe Leblanc
 
 ### 🌲 **Arbre du dépôt**
 
