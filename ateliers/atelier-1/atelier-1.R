@@ -302,16 +302,8 @@ w <- c(0.8, 0.2)
 q <- c(0.0125, 0.2)
 u <- 1:99/100
 
-# Option 1
-fx <- w[1] * dbinom(x, n, q[1]) + w[2] * dbinom(x, n, q[2])
-Fx <- function(k) w[1] * pbinom(k, n, q[1]) + w[2] * pbinom(k, n, q[2])
-
-# Option 2
 fx <- sapply(0:n, function(x) sum(w * dbinom(x, n, q)))
-Fx <- function(k) sum(w * pbinom(k, n, q))
-
-# Option 3
-Fx <- function(k) sum(fx * I(x <= k))
+Fx <- sapply(0:n, function(k) sum(w * pbinom(k, n, q)))
 
 FxInv <- function(u) x[min(which(Fx >= u))]
 plot(u, sapply(u, FxInv), type = 'l', col = 'lightcoral', lwd = 3)
