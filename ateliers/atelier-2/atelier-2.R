@@ -5,6 +5,92 @@
 ################################################################################
 
 ###
+### Exemple Pages 7-16
+###
+
+rm(list = ls())
+
+x <- c(0, 100, 400, 1000, 2000)
+fx <- c(0.3, 0.15, 0.4, 0.1, 0.05)
+sum(fx)     # Vérification
+
+## p.9
+EspX <- sum(x * fx)
+EspX
+
+## p.10
+EspX2 <- sum(x^2 * fx)
+EspX2
+
+## p.11
+VarX <- EspX2 - EspX^2
+VarX
+
+## p.12
+Fx <- function(k) sum(fx * I(x <= k))
+sapply(c(30, 764, 1343), Fx)
+
+## p.14
+EspMin <- function(d) sum(pmin(x, d) * fx)
+sapply(c(500, 800, 1400), EspMin)
+
+## p.13
+# Simplement utiliser la fonction de répartition. Par exemple, la probabilité
+# que les sinistres dépassent 800 est égale à 1 - Fx(800).
+1 - Fx(800)
+
+## p.15
+SL <- function(d) sum(pmax(x - d, 0) * fx)
+sapply(c(500, 800, 1400), SL)
+
+## p.16
+FGM <- function(t) sum(exp(t * x) * fx)
+ENTR <- function(rho) log(FGM(rho))/rho
+sapply(c(0.0005, 0.001, 0.002), ENTR)
+
+
+###
+### Exemple Page 18
+###
+
+rm(list = ls())
+
+a1 <- 0.2; a2 <- 3
+x <- 0:2000; k <- 1:2000
+fx <- c(1 - a1, a1 * ((k/2000)^a2 - ((k - 1)/2000)^a2))
+sum(fx)     # Vérification
+
+## Espérance
+EspX <- sum(x * fx)
+EspX
+
+## Seconde moment
+EspX2 <- sum(x^2 * fx)
+EspX2
+
+## Variance
+VarX <- EspX2 - EspX^2
+VarX
+
+## Fonction de répartition
+Fx <- function(k) sum(fx * I(x <= k))
+sapply(c(30, 764, 1343), Fx)
+
+## Espérance limitée
+EspLim <- function(d) sum(pmin(x, d) * fx)
+sapply(c(500, 800, 1400), EspLim)
+
+## Fonction stop-loss
+SL <- function(d) sum(pmax(x - d, 0) * fx)
+sapply(c(500, 800, 1400), SL)
+
+## Mesure entropique
+FGM <- function(t) sum(exp(t * x) * fx)
+ENTR <- function(rho) log(FGM(rho))/rho
+sapply(c(0.0005, 0.001, 0.002), ENTR)
+
+
+###
 ### Exemple 4
 ###
 
