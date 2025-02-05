@@ -48,7 +48,7 @@ VaRX <- function(k) qexp(k, be)
 VaRX(0.995)
 
 # ii)
-TVaRX <- function(k) mexp(1, be) + VaRX(k)
+TVaRX <- function(k) 1/be + VaRX(k)
 TVaRX(0.995)
 
 # iii)

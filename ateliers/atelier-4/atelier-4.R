@@ -167,9 +167,17 @@ VarCovX <- VarCovI * outer(b, b)
 ## Calculs pour S
 s <- 0:10
 fs <- tapply(probs, rowSums(bj), sum)
+Fs <- cumsum(fs)
 
 EspS <- sum(s * fs)                # sum(EspX)
 VarS <- sum((s - EspS)^2 * fs)     # sum(VarCovX)
+
+VaRS <- function(k) s[min(which(Fs >= k))]
+VaRS(0.95)
+
+SLS <- function(d) sum(pmax(s - d, 0) * fs)
+TVaRS <- function(k) SLS(VaRS(k))/(1 - k) + VaRS(k)
+TVaRS(0.95)
 
 ## Calculs pour Cj
 Cj <- outer(s, EspX/EspS)
