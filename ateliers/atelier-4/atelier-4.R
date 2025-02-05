@@ -139,15 +139,22 @@ trios <- combn(names(x), 3)
 f3 <- apply(trios, 2, function(v) sum(probs * apply(x[, v], 1, prod)))
 names(f3) <- apply(trios, 2, paste, collapse = '_')
 
-## Covariance entre les I
-covI <- zapsmall(f2 - q[duos[1, ]] * q[duos[2, ]])
+## Calculs pour I
+EspI <- q
+VarI <- q * (1 - q)
+CovI <- zapsmall(f2 - q[duos[1, ]] * q[duos[2, ]])
+
+VarCovI <- matrix(0, 4, 4)
+diag(VarCovI) <- VarI
+VarCovI[lower.tri(VarCovI)] <- CovI
+VarCovI[upper.tri(VarCovI)] <- t(VarCovI)[upper.tri(VarCovI)]
 
 ## Calculs pour N
 n <- 0:4
 fn <- tapply(probs, rowSums(x), sum)
 
-EspN <- sum(n * fn)
-VarN <- sum((n - EspN)^2 * fn)
+EspN <- sum(n * fn)                # sum(EspI)
+VarN <- sum((n - EspN)^2 * fn)     # sum(VarCovI) = sum(VarI) + 2 * sum(CovI)
 
 ## Calculs pour X
 b <- 4:1
@@ -155,13 +162,14 @@ bj <- expand.grid(i1 = c(0, 4), i2 = c(0, 3), i3 = c(0, 2), i4 = c(0, 1))
 
 EspX <- b * q
 VarX <- b^2 * q * (1 - q)
+VarCovX <- VarCovI * outer(b, b)
 
 ## Calculs pour S
 s <- 0:10
 fs <- tapply(probs, rowSums(bj), sum)
 
-EspS <- sum(s * fs)
-VarS <- sum((s - EspS)^2 * fs)
+EspS <- sum(s * fs)                # sum(EspX)
+VarS <- sum((s - EspS)^2 * fs)     # sum(VarCovX)
 
 ## Calculs pour Cj
 Cj <- outer(s, EspX/EspS)
