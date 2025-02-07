@@ -41,6 +41,21 @@ lapply(n, function(n) sapply(c(0.1, 0.01), function(eta)
 sapply(c(0.1, 0.05), function(theta)
     optimize(function(n) abs(intervalW(n, theta) - 0.01), c(0, 1e4))$min)
 
+# Graphique de la VaR et de la TVaR de W en fonction de n
+kappas <- seq(0, 0.999, 0.001)
+
+VaR_valeurs <- sapply(kappas, VaRW)
+plot(kappas, VaR_valeurs[1, ], type = 'l', col = 'red', xlab = 'k',
+     ylab = 'VaR', main = 'VaR de W en fonction de n')
+lines(kappas, VaR_valeurs[2, ], col = 'blue')
+lines(kappas, VaR_valeurs[3, ], col = 'green')
+
+TVaR_valeurs <- sapply(kappas, TVaRW)
+plot(kappas, TVaR_valeurs[1, ], type = 'l', col = 'red', xlab = 'k',
+     ylab = 'TVaR', main = 'TVaR de W en fonction de n')
+lines(kappas, TVaR_valeurs[2, ], col = 'blue')
+lines(kappas, TVaR_valeurs[3, ], col = 'green')
+
 
 ####
 #### Mutualisation de risques indépendants avec distributions non identiques
